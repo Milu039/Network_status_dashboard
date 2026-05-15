@@ -54,6 +54,14 @@ interface RecentEvent {
   detail: string;
 }
 
+interface ConnectedDeviceGroup {
+  label: string;
+  connected: number;
+  total: number;
+  icon: 'workstation' | 'mobile' | 'printer' | 'display' | 'storage' | 'accessPoint';
+  tone: 'blue' | 'green' | 'purple' | 'orange' | 'cyan' | 'pink';
+}
+
 @Component({
   selector: 'app-root',
   imports: [],
@@ -192,6 +200,15 @@ export class App implements OnDestroy {
     },
   ]);
 
+  protected readonly connectedDevices: ConnectedDeviceGroup[] = [
+    { label: 'Workstations', connected: 298, total: 324, icon: 'workstation', tone: 'blue' },
+    { label: 'Mobile Devices', connected: 432, total: 456, icon: 'mobile', tone: 'green' },
+    { label: 'Printers', connected: 35, total: 38, icon: 'printer', tone: 'purple' },
+    { label: 'Displays', connected: 87, total: 89, icon: 'display', tone: 'orange' },
+    { label: 'Storage', connected: 12, total: 12, icon: 'storage', tone: 'cyan' },
+    { label: 'Access Points', connected: 66, total: 67, icon: 'accessPoint', tone: 'pink' },
+  ];
+
   private readonly clock = window.setInterval(() => {
     this.currentTime.set(new Date());
   }, 1000);
@@ -271,5 +288,9 @@ export class App implements OnDestroy {
 
   protected issueCount(): number {
     return this.devices().filter((device) => device.status !== 'online').length;
+  }
+
+  protected connectedPercent(deviceGroup: ConnectedDeviceGroup): number {
+    return Math.round((deviceGroup.connected / deviceGroup.total) * 100);
   }
 }

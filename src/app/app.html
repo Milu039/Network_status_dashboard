@@ -211,5 +211,78 @@
         }
       </div>
     </article>
+
+    <article class="panel connected-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Building Inventory</p>
+          <h2>Connected Devices</h2>
+        </div>
+      </div>
+
+      <div class="connected-grid">
+        @for (deviceGroup of connectedDevices; track deviceGroup.label) {
+          <div
+            class="connected-card"
+            [class.blue]="deviceGroup.tone === 'blue'"
+            [class.green]="deviceGroup.tone === 'green'"
+            [class.purple]="deviceGroup.tone === 'purple'"
+            [class.orange]="deviceGroup.tone === 'orange'"
+            [class.cyan]="deviceGroup.tone === 'cyan'"
+            [class.pink]="deviceGroup.tone === 'pink'"
+          >
+            <div class="connected-card-top">
+              <span class="device-icon" aria-hidden="true">
+                @if (deviceGroup.icon === 'workstation') {
+                  <svg viewBox="0 0 24 24">
+                    <path d="M6 5h12l1 9H5l1-9Zm2 11h8m-6 3h4" />
+                  </svg>
+                }
+
+                @if (deviceGroup.icon === 'mobile') {
+                  <svg viewBox="0 0 24 24">
+                    <path d="M8 3h8v18H8V3Zm3.5 15h1" />
+                  </svg>
+                }
+
+                @if (deviceGroup.icon === 'printer') {
+                  <svg viewBox="0 0 24 24">
+                    <path d="M7 8V4h10v4M7 17H5v-7h14v7h-2M7 14h10v6H7v-6Zm10-1h.01" />
+                  </svg>
+                }
+
+                @if (deviceGroup.icon === 'display') {
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 6h14v10H5V6Zm5 13h4M8 3l2 3m6-3-2 3" />
+                  </svg>
+                }
+
+                @if (deviceGroup.icon === 'storage') {
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 7h14l-2 10H7L5 7Zm4 7h6M8 10h8" />
+                  </svg>
+                }
+
+                @if (deviceGroup.icon === 'accessPoint') {
+                  <svg viewBox="0 0 24 24">
+                    <path d="M8.5 14.5a5 5 0 0 1 7 0M5.5 11.5a9 9 0 0 1 13 0M11.25 17.75a1 1 0 0 1 1.5 0M12 20h.01" />
+                  </svg>
+                }
+              </span>
+
+              <div class="connected-count">
+                <strong>{{ deviceGroup.connected }}</strong>
+                <span>of {{ deviceGroup.total }}</span>
+              </div>
+            </div>
+
+            <p>{{ deviceGroup.label }}</p>
+            <div class="connected-progress" aria-hidden="true">
+              <span [style.width.%]="connectedPercent(deviceGroup)"></span>
+            </div>
+          </div>
+        }
+      </div>
+    </article>
   </section>
 </main>
